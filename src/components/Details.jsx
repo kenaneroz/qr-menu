@@ -2,7 +2,7 @@ import { IoMdClose } from "react-icons/io";
 
 export default function Details(props) {
     return (
-        <div className="bg-gray-500 w-full h-[750px] z-999 absolute bottom-0 left-0 text-center p-[25px]">
+        <div className="bg-gray-500 w-full h-[550px] z-999 absolute bottom-0 left-0 overflow-y-scroll text-center p-[25px]">
             <IoMdClose 
                 className="cursor-pointer text-white text-3xl"
                 onClick={() => props.setDetailsActive(false)}

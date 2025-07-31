@@ -10,7 +10,7 @@ export default function Header(props) {
                 </select>
                 <MdOutlineShoppingCart className="cursor-pointer" onClick={props.showBasket} />
             </div>
-            <h3 className="text-xl font-bold text-center">Burger House</h3>
+            <h3 className="text-xl font-bold text-center">Logo</h3>
         </header>
     ) 
 }

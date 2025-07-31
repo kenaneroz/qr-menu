@@ -14,7 +14,7 @@ export default function Basket(props) {
     })
 
     return (
-        <div className="bg-gray-500 w-full h-[750px] z-999 absolute bottom-0 left-0 p-[25px]">
+        <div className="bg-gray-500 w-full h-[550px] z-999 absolute bottom-0 left-0 overflow-y-scroll p-[25px]">
             <div className="text-white flex justify-between mb-[50px]">
                 <button 
                     className="cursor-pointer"
