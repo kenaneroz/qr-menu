@@ -7,36 +7,37 @@ import Details from './components/Details.jsx'
 import Basket from './components/Basket.jsx'
 import BasketProduct from './components/BasketProduct.jsx'
 
+
 function App() {
   const data = [
     {
-      imgUrl: '',
       translations: {
         "English": {
+          imgUrl: 'src/images/drinks.jpg',
           title: 'Drinks',
           sub: [
             {
-              imgUrl: '',
+              imgUrl: 'src/images/drinks.jpg',
               title: 'Cold Drinks',
               sub: [
                 {
-                  imgUrl: '',
+                  imgUrl: 'src/images/drinks.jpg',
                   title: 'Iced Filter Coffee',
                   description: 'Description'
                 }
               ]
             },
             {
-              imgUrl: '',
+              imgUrl: 'src/images/drinks.jpg',
               title: 'Hot Drinks',
               sub: [
                 {
-                  imgUrl: '',
+                  imgUrl: 'src/images/drinks.jpg',
                   title: 'Americano',
                   description: 'Description'
                 },
                 {
-                  imgUrl: '',
+                  imgUrl: 'src/images/drinks.jpg',
                   title: 'Hot Chocolate',
                   description: 'Description'
                 }
@@ -45,31 +46,32 @@ function App() {
           ]
         },
         "Turkish": {
+          imgUrl: './images/drinks.jpg',
           title: "İçecekler",
           description: '',
           sub: [
             {
-              imgUrl: '',
+              imgUrl: 'src/images/drinks.jpg',
               title: 'Soğuk İçecekler',
               sub: [
                 {
-                  imgUrl: '',
+                  imgUrl: 'src/images/drinks.jpg',
                   title: 'Soğuk Filtre Kahve',
                   description: 'Açıklama'
                 }
               ]
             },
             {
-              imgUrl: '',
+              imgUrl: 'src/images/drinks.jpg',
               title: 'Sıcak İçecekler',
               sub: [
                 {
-                  imgUrl: '',
+                  imgUrl: 'src/images/drinks.jpg',
                   title: 'Americano',
                   description: 'Açıklama'
                 },
                 {
-                  imgUrl: '',
+                  imgUrl: 'src/images/drinks.jpg',
                   title: 'Sıcak Çikolata',
                   description: 'Açıklama'
                 }
@@ -153,20 +155,21 @@ function App() {
 
 
   return (
-    <div className='px-[25px]'>
+    <div>
       <Header 
         setSelectedLanguage={setSelectedLanguage} 
         showBasket={showBasket}  
       />
 
-      <div className='pt-[50px]'>
+      <div className='bg-white translate-y-[-100px] mx-[25px] p-[25px]'>
         {
           productStack.length > 1 
           && 
-          <FaChevronLeft
-            className='mb-[15px] cursor-pointer'
-            onClick={handleBack}
-          />
+          <div className='cursor-pointer flex items-center gap-[5px] mb-[10px]' onClick={handleBack}>
+            <FaChevronLeft />
+            <p>Back</p>
+          </div>
+    
         }
         <div className="grid grid-cols-2 gap-[5px]">{productsShown}</div>
       </div>

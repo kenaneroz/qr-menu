@@ -1,11 +1,15 @@
 export default function Product(props) {
+    console.log(props.imgUrl)
     return (
         <div 
-            style={{backgroundImage: `url(${props.imgUrl})`}}
-            className="cursor-pointer bg-black bg-cover aspect-square relative flex justify-center border border-white"
+            style={{ backgroundImage: `url(${props.imgUrl})` }}
+            className={`bg-no-repeat bg-center bg-cover cursor-pointer aspect-square relative flex justify-center items-center border border-white rounded-[25px]`}
             onClick={props.onClick}
         >
-            <h3 className="text-white absolute bottom-2">{props.title}</h3>
+            <div className="absolute inset-0 bg-[#50110A]/75 rounded-[25px]"></div> {/* color overlay */}
+            <div className="relative z-10 flex justify-center items-center h-full">
+                <p className="text-white text-center">{props.title}</p>
+            </div>
         </div>
     )
 }
