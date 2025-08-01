@@ -13,31 +13,31 @@ function App() {
     {
       translations: {
         "English": {
-          imgUrl: './images/drinks.jpg',
+          imgUrl: '/drinks.jpg',
           title: 'Drinks',
           sub: [
             {
-              imgUrl: './images/drinks.jpg',
+              imgUrl: '/drinks.jpg',
               title: 'Cold Drinks',
               sub: [
                 {
-                  imgUrl: './images/drinks.jpg',
+                  imgUrl: '/drinks.jpg',
                   title: 'Iced Filter Coffee',
                   description: 'Description'
                 }
               ]
             },
             {
-              imgUrl: './images/drinks.jpg',
+              imgUrl: '/drinks.jpg',
               title: 'Hot Drinks',
               sub: [
                 {
-                  imgUrl: './images/drinks.jpg',
+                  imgUrl: '/drinks.jpg',
                   title: 'Americano',
                   description: 'Description'
                 },
                 {
-                  imgUrl: './images/drinks.jpg',
+                  imgUrl: '/drinks.jpg',
                   title: 'Hot Chocolate',
                   description: 'Description'
                 }
@@ -46,32 +46,32 @@ function App() {
           ]
         },
         "Turkish": {
-          imgUrl: './images/drinks.jpg',
+          imgUrl: '/drinks.jpg',
           title: "İçecekler",
           description: '',
           sub: [
             {
-              imgUrl: './images/drinks.jpg',
+              imgUrl: '/drinks.jpg',
               title: 'Soğuk İçecekler',
               sub: [
                 {
-                  imgUrl: './images/drinks.jpg',
+                  imgUrl: '/drinks.jpg',
                   title: 'Soğuk Filtre Kahve',
                   description: 'Açıklama'
                 }
               ]
             },
             {
-              imgUrl: './images/drinks.jpg',
+              imgUrl: '/drinks.jpg',
               title: 'Sıcak İçecekler',
               sub: [
                 {
-                  imgUrl: './images/drinks.jpg',
+                  imgUrl: '/drinks.jpg',
                   title: 'Americano',
                   description: 'Açıklama'
                 },
                 {
-                  imgUrl: './images/drinks.jpg',
+                  imgUrl: '/drinks.jpg',
                   title: 'Sıcak Çikolata',
                   description: 'Açıklama'
                 }
