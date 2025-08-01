@@ -2,7 +2,7 @@ import { MdOutlineShoppingCart } from "react-icons/md"
 
 export default function Header(props) {
     return (
-        <header className="bg-[url(src/images/business.png)] bg-cover bg-center px-[25px] pt-[10px] pb-[125px]">
+        <header className="bg-[url(./images/business.png)] bg-cover bg-center px-[25px] pt-[10px] pb-[125px]">
             <div className="flex justify-between">
                 <select name="languages" id="languages" className="appearance-none cursor-pointer bg-[#F5F5F8] text-[#50110A] h-max rounded-full p-[5px]" onChange={(e) => props.setSelectedLanguage(e.target.value)}>
                     <option value="English">English</option>
