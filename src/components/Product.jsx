@@ -1,5 +1,4 @@
 export default function Product(props) {
-    console.log(props.imgUrl)
     return (
         <div 
             style={{ backgroundImage: `url(${props.imgUrl})` }}

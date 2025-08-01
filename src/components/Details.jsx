@@ -5,6 +5,7 @@ export default function Details(props) {
     if(props.basket.length > 0) {
         foundProduct = props.basket.find(product => product.title == props.currentProduct.title)
     }
+    console.log(props.currentProduct)
 
     return (
         <div className={`bg-[#50110A] h-dvh w-full z-999 absolute top-0 left-0 transform ${props.detailsActive ? 'translate-y-[0]' : 'translate-y-[100%]'} transition duration-250 ease-in-out overflow-x-hidden overflow-y-scroll text-center p-[25px]`}>
@@ -14,7 +15,7 @@ export default function Details(props) {
             />
             <div>
                 <div 
-                    style={{backgroundImage: `url('${props.currentProduct.imgUrl}')`}}
+                    style={{backgroundImage: props.currentProduct?.imgUrl ? `url(${props.currentProduct.imgUrl})` : ''}}
                     className="bg-no-repeat bg-center bg-cover w-full aspect-square relative mt-[50px] mb-[25px]"
                 >   
                     {
