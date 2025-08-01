@@ -101,13 +101,13 @@ function App() {
 
   const [detailsActive, setDetailsActive] = useState(false)
 
-  const [productToShowDetails, setProductToShowDetails] = useState(null)
+  const [currentProduct, setCurrentProduct] = useState(null)
 
   function showDetails(product) {
     if(!product.sub) {
       setDetailsActive(true)
       setBasketActive(false)
-      setProductToShowDetails(product)
+      setCurrentProduct(product)
     }
   }
 
@@ -115,19 +115,16 @@ function App() {
   const [basket, setBasket] = useState([])
  
   function addToBasket() {
-    setBasket(prev => {
-      const existingProduct = prev.find(product => product.title === productToShowDetails.title)
-
-      if(existingProduct) {
-        return (
-          prev.map(product => product.title === productToShowDetails.title ? {...product, count: (product.count || 1) + 1} : product)
-        )
-      } else {
-        return [...prev, {...productToShowDetails, count: 1}];
-      }
-    })
+    setBasket(prev =>  [...prev, {...currentProduct, count: 1}])
   }
 
+  function increaseCount(selectedProduct) {
+    setBasket(prev => prev.map(product => product.title == selectedProduct.title ? {...product, count: product.count + 1} : product))
+  }
+  function decreaseCount(selectedProduct) {
+    setBasket(prev => prev.map(product =>(product.title == selectedProduct.title && product.count > 0) ? {...product, count: product.count - 1} : product))
+    setBasket(prev => prev.filter(product => product.count != 0))
+  }
 
 
   function showBasket() {
@@ -153,14 +150,13 @@ function App() {
 
 
 
-
-
   return (
     <div className='px-[25px]'>
       <Header 
         setSelectedLanguage={setSelectedLanguage} 
         showBasket={showBasket}  
       />
+
       <div className='pt-[50px]'>
         {
           productStack.length > 1 
@@ -172,24 +168,26 @@ function App() {
         }
         <div className="grid grid-cols-2 gap-[5px]">{productsShown}</div>
       </div>
-      {
-        detailsActive 
-        &&
-        <Details 
-          productToShowDetails={productToShowDetails}
-          setDetailsActive={setDetailsActive}
-          addToBasket={addToBasket}
-        />
-      }
-      {
-        basketActive
-        &&
-        <Basket
-          hideBasket={hideBasket}
-          basket={basket}
-          setBasket={setBasket}
-        />
-      }
+
+      <Details 
+        detailsActive={detailsActive}
+        currentProduct={currentProduct}
+        setDetailsActive={setDetailsActive}
+        basket={basket}
+        addToBasket={addToBasket}
+        increaseCount={() => increaseCount(currentProduct)}
+        decreaseCount={() => decreaseCount(currentProduct)}
+      />
+
+      <Basket
+        basketActive={basketActive}
+        hideBasket={hideBasket}
+        basket={basket}
+        setBasket={setBasket}
+        increaseCount={increaseCount}
+        decreaseCount={decreaseCount}
+        setCurrentProduct={setCurrentProduct}
+      />
     </div>
   )
 }

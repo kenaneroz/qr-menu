@@ -8,7 +8,7 @@ export default function Header(props) {
                     <option value="English">English</option>
                     <option value="Turkish">Türkçe</option>
                 </select>
-                <MdOutlineShoppingCart className="cursor-pointer" onClick={props.showBasket} />
+                <MdOutlineShoppingCart className="cursor-pointer text-xl" onClick={props.showBasket} />
             </div>
             <h3 className="text-xl font-bold text-center">Logo</h3>
         </header>
