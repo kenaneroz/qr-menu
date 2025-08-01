@@ -7,7 +7,7 @@ export default function Details(props) {
     }
 
     return (
-        <div className={`bg-gray-500 w-full h-screen z-999 absolute bottom-0 left-0 transform ${props.detailsActive ? 'translate-y-[0]' : 'translate-y-[100%]'} transition duration-250 ease-in-out overflow-y-scroll text-center p-[25px]`}>
+        <div className={`bg-gray-500 w-full h-dvh z-999 absolute bottom-0 left-0 transform ${props.detailsActive ? 'translate-y-[0]' : 'translate-y-[100%]'} transition duration-250 ease-in-out overflow-x-hidden overflow-y-scroll text-center p-[25px]`}>
             <IoMdClose 
                 className="cursor-pointer text-white text-2xl"
                 onClick={() => props.setDetailsActive(false)}
