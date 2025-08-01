@@ -173,26 +173,32 @@ function App() {
         }
         <div className="grid grid-cols-2 gap-[5px]">{productsShown}</div>
       </div>
+      
+      {
+        detailsActive &&
+        <Details 
+          detailsActive={detailsActive}
+          currentProduct={currentProduct}
+          setDetailsActive={setDetailsActive}
+          basket={basket}
+          addToBasket={addToBasket}
+          increaseCount={() => increaseCount(currentProduct)}
+          decreaseCount={() => decreaseCount(currentProduct)}
+        />
+      }
 
-      <Details 
-        detailsActive={detailsActive}
-        currentProduct={currentProduct}
-        setDetailsActive={setDetailsActive}
-        basket={basket}
-        addToBasket={addToBasket}
-        increaseCount={() => increaseCount(currentProduct)}
-        decreaseCount={() => decreaseCount(currentProduct)}
-      />
-
-      <Basket
-        basketActive={basketActive}
-        hideBasket={hideBasket}
-        basket={basket}
-        setBasket={setBasket}
-        increaseCount={increaseCount}
-        decreaseCount={decreaseCount}
-        setCurrentProduct={setCurrentProduct}
-      />
+      {
+        basketActive &&
+        <Basket
+          basketActive={basketActive}
+          hideBasket={hideBasket}
+          basket={basket}
+          setBasket={setBasket}
+          increaseCount={increaseCount}
+          decreaseCount={decreaseCount}
+          setCurrentProduct={setCurrentProduct}
+        />
+      }
     </div>
   )
 }
