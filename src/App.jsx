@@ -104,6 +104,7 @@ function App() {
   const [currentProduct, setCurrentProduct] = useState(null)
 
   function showDetails(product) {
+    document.body.style.overflow = 'hidden'
     if(!product.sub) {
       setDetailsActive(true)
       setBasketActive(false)
@@ -130,6 +131,7 @@ function App() {
   function showBasket() {
     setBasketActive(true)
     setDetailsActive(false)
+    document.body.style.overflow = 'hidden'
   }
   function hideBasket() {
     setBasketActive(false)
