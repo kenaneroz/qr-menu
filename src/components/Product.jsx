@@ -2,7 +2,7 @@ export default function Product(props) {
     return (
         <div 
             style={{backgroundImage: `url(${props.imgUrl})`}}
-            className={`w-full aspect-square bg-no-repeat bg-center bg-cover cursor-pointer relative border border-white rounded-[25px] p-[10px]`}
+            className={`w-full max-w-full aspect-square bg-no-repeat bg-center bg-cover cursor-pointer relative rounded-[25px] p-[10px]`}
             onClick={props.onClick}
         >
             <div className="absolute inset-0 bg-[#50110A]/75 rounded-[25px]"></div>
