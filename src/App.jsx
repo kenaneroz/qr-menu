@@ -181,7 +181,7 @@ function App() {
           </div>
     
         }
-        <div className="grid grid-cols-2 gap-[5px]">{productsShown}</div>
+        <div className="w-full max-w-full grid grid-cols-2 gap-[5px]">{productsShown}</div>
       </div>
       
       {
