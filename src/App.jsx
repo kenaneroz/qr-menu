@@ -116,6 +116,15 @@ function App() {
 
   const [basketActive, setBasketActive] = useState(false)
   const [basket, setBasket] = useState([])
+
+  const [basketItemsCount, setBasketItemsCount] = useState(0)
+  useEffect(() => {
+    let count = 0
+    basket.map(product => {
+      count += product.count
+    })
+    setBasketItemsCount(() => count ? count : 0)
+  }, [basket])
  
   function addToBasket() {
     setBasket(prev =>  [...prev, {...currentProduct, count: 1}])
@@ -159,9 +168,10 @@ function App() {
       <Header 
         setSelectedLanguage={setSelectedLanguage} 
         showBasket={showBasket}  
+        basketItemsCount={basketItemsCount}
       />
 
-      <div className='bg-white translate-y-[-100px] mx-[25px] p-[25px]'>
+      <div className='bg-white translate-y-[-90px] mx-[25px] p-[25px]'>
         {
           productStack.length > 1 
           && 
