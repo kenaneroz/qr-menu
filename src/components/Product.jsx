@@ -2,7 +2,7 @@ export default function Product(props) {
     return (
         <div 
             style={{ backgroundImage: `url(${props.imgUrl})` }}
-            className={`bg-no-repeat bg-center bg-cover cursor-pointer aspect-square relative flex justify-center items-center border border-white rounded-[25px] p-[10px]`}
+            className={`bg-no-repeat bg-center bg-cover cursor-pointer w-full aspect-square relative flex justify-center items-center border border-white rounded-[25px] p-[10px]`}
             onClick={props.onClick}
         >
             <div className="absolute inset-0 bg-[#50110A]/75 rounded-[25px]"></div> {/* color overlay */}
