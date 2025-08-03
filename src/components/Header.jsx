@@ -13,8 +13,11 @@ export default function Header(props) {
                 </select>
                 <div className="flex items-center gap-[10px]">
                     <LuSearch className="text-[#50110A] text-2xl" />
-                    <div className="cursor-pointer flex items-start">
-                        <MdOutlineShoppingCart className="text-[#50110A] text-2xl" onClick={props.showBasket} />
+                    <div 
+                        className="cursor-pointer flex items-start"
+                        onClick={props.showBasket}    
+                    >
+                        <MdOutlineShoppingCart className="text-[#50110A] text-2xl" />
                         <small className="bg-[#50110A] text-white h-[17px] aspect-square flex justify-center items-center rounded-full">{props.basketItemsCount}</small>
                     </div>
                     <GiHamburgerMenu className="text-[#50110A] text-2xl" />

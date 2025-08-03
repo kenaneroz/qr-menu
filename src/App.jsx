@@ -15,31 +15,37 @@ function App() {
         "English": {
           imgUrl: '/drinks.jpg',
           title: 'Drinks',
+          price: 'none',
           sub: [
             {
               imgUrl: '/drinks.jpg',
               title: 'Cold Drinks',
+              price: 'none',
               sub: [
                 {
                   imgUrl: '/drinks.jpg',
                   title: 'Iced Filter Coffee',
-                  description: 'Description'
+                  description: 'Description',
+                  price: 3 
                 }
               ]
             },
             {
               imgUrl: '/drinks.jpg',
               title: 'Hot Drinks',
+              price: 'none',
               sub: [
                 {
                   imgUrl: '/drinks.jpg',
                   title: 'Americano',
-                  description: 'Description'
+                  description: 'Description',
+                  price: 3
                 },
                 {
                   imgUrl: '/drinks.jpg',
                   title: 'Hot Chocolate',
-                  description: 'Description'
+                  description: 'Description',
+                  price: 3
                 }
               ]
             }
@@ -49,31 +55,37 @@ function App() {
           imgUrl: '/drinks.jpg',
           title: "İçecekler",
           description: '',
+          price: 'none',
           sub: [
             {
               imgUrl: '/drinks.jpg',
               title: 'Soğuk İçecekler',
+              price: 'none',
               sub: [
                 {
                   imgUrl: '/drinks.jpg',
                   title: 'Soğuk Filtre Kahve',
-                  description: 'Açıklama'
+                  description: 'Açıklama',
+                  price: 3
                 }
               ]
             },
             {
               imgUrl: '/drinks.jpg',
               title: 'Sıcak İçecekler',
+              price: 'none',
               sub: [
                 {
                   imgUrl: '/drinks.jpg',
                   title: 'Americano',
-                  description: 'Açıklama'
+                  description: 'Açıklama',
+                  price: 3
                 },
                 {
                   imgUrl: '/drinks.jpg',
                   title: 'Sıcak Çikolata',
-                  description: 'Açıklama'
+                  description: 'Açıklama',
+                  price: 3
                 }
               ]
             }
@@ -154,12 +166,17 @@ function App() {
       key={index}
       imgUrl={product.imgUrl} 
       title={product.title}
+      price={product.price}
       onClick={() => {
         showDetails(product)
         showSubProducts(product)
       }}
     />
   })
+
+  function setCount(p, c) {
+    setBasket(prev => prev.map(product => product.title == p.title ? {...product, count: c} : product))
+  }
 
 
 
@@ -194,6 +211,7 @@ function App() {
           addToBasket={addToBasket}
           increaseCount={() => increaseCount(currentProduct)}
           decreaseCount={() => decreaseCount(currentProduct)}
+          setCount={(e) => setCount(currentProduct, JSON.parse(e.target.value))}
         />
       }
 
@@ -207,6 +225,7 @@ function App() {
           increaseCount={increaseCount}
           decreaseCount={decreaseCount}
           setCurrentProduct={setCurrentProduct}
+          setCount={setCount}
         />
       }
     </div>

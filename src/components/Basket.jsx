@@ -10,6 +10,7 @@ export default function Basket(props) {
             count={product.count}
             increaseCount={() => props.increaseCount(product)}
             decreaseCount={() => props.decreaseCount(product)}
+            setCount={(e) => props.setCount(product, JSON.parse(e.target.value))}
         />
     })
 
