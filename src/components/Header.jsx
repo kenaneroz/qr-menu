@@ -12,7 +12,20 @@ export default function Header(props) {
                     <option value="Turkish">Türkçe</option>
                 </select>
                 <div className="flex items-center gap-[10px]">
-                    <LuSearch className="text-[#50110A] text-2xl" />
+                    {
+                        props.searchBar &&
+                        <textarea 
+                            placeholder="Search"
+                            value={props.searchTerm}
+                            onChange={(e) => props.setSearchTerm(e.target.value)}
+                            className="w-[150px] placeholder-[#50110A]/25 text-sm rounded-full border border-[#50110A] px-[10px] py-[3px]"
+                            rows={1}
+                        ></textarea>
+                    }
+                    <LuSearch
+                        className="cursor-pointer min-w-min text-[#50110A] text-2xl"
+                        onClick={props.showHideSearchBar}
+                    />
                     <div 
                         className="cursor-pointer flex items-start"
                         onClick={props.showBasket}    

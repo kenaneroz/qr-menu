@@ -27,6 +27,14 @@ export default function Basket(props) {
                 >Clear Basket</button>
             </div>
             <div>{productsInBasket}</div>
+            {
+                props.total != 0
+                &&
+                <div className="flex items-end gap-[5px] pt-[25px]">
+                    <p className="text-white">Checkout:</p>
+                    <p className="text-white text-xl font-bold">${props.total}</p>
+                </div>
+            }
         </div>
     )
 }

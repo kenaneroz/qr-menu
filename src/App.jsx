@@ -129,13 +129,18 @@ function App() {
   const [basketActive, setBasketActive] = useState(false)
   const [basket, setBasket] = useState([])
 
+  const [total, setTotal] = useState(0)
+
   const [basketItemsCount, setBasketItemsCount] = useState(0)
   useEffect(() => {
     let count = 0
+    let total = 0
     basket.map(product => {
       count += product.count
+      if(product.price != 'none') total += product.count * product.price
     })
     setBasketItemsCount(() => count ? count : 0)
+    setTotal(total)
   }, [basket])
  
   function addToBasket() {
@@ -160,7 +165,6 @@ function App() {
     setBasketActive(false)
   }
 
-
   const productsShown = productStack[productStack.length - 1].map((product, index) => {
     return <Product 
       key={index}
@@ -178,6 +182,44 @@ function App() {
     setBasket(prev => prev.map(product => product.title == p.title ? {...product, count: c} : product))
   }
 
+  const [searchTerm, setSearchTerm] = useState('')
+  const [searchItems, setSearchItems] = useState([])
+  useEffect(() => {
+    if(searchTerm === '') {
+      setSearchItems([])
+    }
+    searchMenu(data, selectedLanguage, searchTerm)
+  }, [searchTerm])
+  function searchMenu(data, selectedLanguage, searchTerm) {
+    const results = []
+
+    function traverse(items) {
+      for (const item of items) {
+
+        if(item.title.toLowerCase().includes(searchTerm.toLowerCase()) && !item.sub) {
+          results.push(item)
+        }
+
+        if(item.sub && Array.isArray(item.sub)) {
+          traverse(item.sub)
+        }
+      }
+    }
+
+    for(const category of data) {
+      const langData = category.translations[selectedLanguage]
+      if(langData) {
+        traverse([langData])
+      }
+    }
+
+    setSearchItems(results)
+  }
+
+  const [searchBar, setSearchBar] = useState(false)
+  function showHideSearchBar() {
+    setSearchBar(prev => !prev)
+  }
 
 
   return (
@@ -186,11 +228,15 @@ function App() {
         setSelectedLanguage={setSelectedLanguage} 
         showBasket={showBasket}  
         basketItemsCount={basketItemsCount}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        searchBar={searchBar}
+        showHideSearchBar={showHideSearchBar}
       />
 
       <div className='bg-white translate-y-[-90px] mx-[25px] p-[25px]'>
         {
-          productStack.length > 1 
+          productStack.length > 1 && searchTerm === ''
           && 
           <div className='cursor-pointer flex items-center gap-[5px] mb-[10px]' onClick={handleBack}>
             <FaChevronLeft />
@@ -198,7 +244,26 @@ function App() {
           </div>
     
         }
-        <div className="w-full max-w-full grid grid-cols-2 gap-[5px]">{productsShown}</div>
+        <div className="w-full max-w-full min-h-screen grid grid-cols-2 gap-[5px]">
+          {
+            searchTerm === ''
+            ?
+            productsShown
+            :
+            searchItems.map((product, index) => {
+              return <Product 
+                key={index}
+                imgUrl={product.imgUrl} 
+                title={product.title}
+                price={product.price}
+                onClick={() => {
+                  showDetails(product)
+                  showSubProducts(product)
+                }}
+              />
+            })
+          }
+        </div>
       </div>
       
       {
@@ -226,8 +291,11 @@ function App() {
           decreaseCount={decreaseCount}
           setCurrentProduct={setCurrentProduct}
           setCount={setCount}
+          total={total}
         />
       }
+
+
     </div>
   )
 }
