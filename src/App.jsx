@@ -123,6 +123,7 @@ function App() {
       setDetailsActive(true)
       setBasketActive(false)
       setCurrentProduct(product)
+      setSidebar(false)
     }
   }
 
@@ -160,6 +161,7 @@ function App() {
     setBasketActive(true)
     setDetailsActive(false)
     document.body.style.overflow = 'hidden'
+    setSidebar(false)
   }
   function hideBasket() {
     setBasketActive(false)
@@ -221,6 +223,16 @@ function App() {
     setSearchBar(prev => !prev)
   }
 
+  const [sidebar, setSidebar] = useState(false)
+  function showSidebar() {
+    setSidebar(true)
+    setBasketActive(false)
+    setDetailsActive(false)
+    if(sidebar) document.body.style.overflow = 'hidden'
+  }
+  function hideSidebar() {
+    setSidebar(false)
+  }
 
   return (
     <div>
@@ -232,9 +244,12 @@ function App() {
         setSearchTerm={setSearchTerm}
         searchBar={searchBar}
         showHideSearchBar={showHideSearchBar}
+        sidebar={sidebar}
+        showSidebar={showSidebar}
+        hideSidebar={hideSidebar}
       />
 
-      <div className='bg-white translate-y-[-90px] mx-[25px] p-[25px]'>
+      <div className='bg-white translate-y-[-90px] z-40 mx-[25px] p-[25px]'>
         {
           productStack.length > 1 && searchTerm === ''
           && 
