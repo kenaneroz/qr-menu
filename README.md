@@ -3,4 +3,6 @@
 - **Live Demo:** (https://qr-menu-five-beryl.vercel.app/)
 
 ### Features
-- Will be added.
+- Language feature
+- Product searching feature
+- Basket feature
