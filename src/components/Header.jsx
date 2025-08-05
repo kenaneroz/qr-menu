@@ -32,12 +32,12 @@ export default function Header(props) {
                         ?
                         <LuSearchX 
                             className="cursor-pointer min-w-min text-[#50110A] text-2xl"
-                            onClick={props.showHideSearchBar}
+                            onClick={props.hideSearchBar}
                         />
                         :
                         <LuSearch
                             className="cursor-pointer min-w-min text-[#50110A] text-2xl"
-                            onClick={props.showHideSearchBar}
+                            onClick={props.showSearchBar}
                         />
                     }
                     <div 

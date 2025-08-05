@@ -219,8 +219,12 @@ function App() {
   }
 
   const [searchBar, setSearchBar] = useState(false)
-  function showHideSearchBar() {
-    setSearchBar(prev => !prev)
+  function showSearchBar() {
+    setSearchBar(true)
+  }
+  function hideSearchBar() {
+    setSearchBar(false)
+    setSearchTerm('')
   }
 
   const [sidebar, setSidebar] = useState(false)
@@ -243,7 +247,8 @@ function App() {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         searchBar={searchBar}
-        showHideSearchBar={showHideSearchBar}
+        showSearchBar={showSearchBar}
+        hideSearchBar={hideSearchBar}
         sidebar={sidebar}
         showSidebar={showSidebar}
         hideSidebar={hideSidebar}
