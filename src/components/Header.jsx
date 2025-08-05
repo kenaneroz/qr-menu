@@ -1,12 +1,7 @@
 import { MdOutlineShoppingCart } from "react-icons/md"
-import { MdOutlineShoppingBasket } from "react-icons/md";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { LuSearch } from "react-icons/lu";
-import { LuSearchX } from "react-icons/lu";
-import { GiPhone } from "react-icons/gi";
-import { TbMapPin } from "react-icons/tb";
-import { MdOutlineAlternateEmail } from "react-icons/md";
-import { IoMdClose } from "react-icons/io";
+import { GiHamburgerMenu } from "react-icons/gi"
+import { LuSearch, LuSearchX } from "react-icons/lu"
+import { IoMdClose } from "react-icons/io"
 
 export default function Header(props) {
     return (
@@ -53,7 +48,7 @@ export default function Header(props) {
                     />
                     {
                         props.sidebar &&
-                        <div className="bg-[#50110A] text-white h-dvh w-[65%] absolute top-0 left-0 z-50 p-[25px]">
+                        <div className="bg-[#50110A] text-white h-dvh w-[300px] absolute top-0 left-0 z-50 p-[25px]">
                             <IoMdClose 
                                 className="cursor-pointer text-xl mb-[25px]" 
                                 onClick={props.hideSidebar}

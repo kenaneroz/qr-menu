@@ -15,7 +15,7 @@ export default function Basket(props) {
     })
 
     return (
-        <div className={`bg-[#50110A] h-dvh w-full absolute top-0 left-0 p-[25px]`}>
+        <div className={`bg-[#50110A] h-dvh w-full max-w-lg absolute top-0 left-0 p-[25px]`}>
             <div className="text-white flex justify-between mb-[50px]">
                 <IoMdClose 
                     className="cursor-pointer text-2xl"

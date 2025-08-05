@@ -8,7 +8,7 @@ export default function Details(props) {
     console.log(props.currentProduct)
 
     return (
-        <div className={`bg-[#50110A] h-dvh w-full z-999 absolute top-0 left-0 text-center p-[25px]`}>
+        <div className={`bg-[#50110A] h-dvh w-full max-w-lg z-999 absolute top-0 left-0 text-center p-[25px]`}>
             <IoMdClose 
                 className="cursor-pointer text-white text-2xl"
                 onClick={() => props.setDetailsActive(false)}
