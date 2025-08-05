@@ -26,7 +26,7 @@ function App() {
                   imgUrl: '/drinks.jpg',
                   title: 'Iced Filter Coffee',
                   description: 'Description',
-                  price: 3 
+                  price: 3.00
                 }
               ]
             },
@@ -39,13 +39,13 @@ function App() {
                   imgUrl: '/drinks.jpg',
                   title: 'Americano',
                   description: 'Description',
-                  price: 3
+                  price: 3.10
                 },
                 {
                   imgUrl: '/drinks.jpg',
                   title: 'Hot Chocolate',
                   description: 'Description',
-                  price: 3
+                  price: 2.95
                 }
               ]
             }
@@ -66,7 +66,7 @@ function App() {
                   imgUrl: '/drinks.jpg',
                   title: 'Soğuk Filtre Kahve',
                   description: 'Açıklama',
-                  price: 3
+                  price: 100
                 }
               ]
             },
@@ -79,13 +79,13 @@ function App() {
                   imgUrl: '/drinks.jpg',
                   title: 'Americano',
                   description: 'Açıklama',
-                  price: 3
+                  price: 120
                 },
                 {
                   imgUrl: '/drinks.jpg',
                   title: 'Sıcak Çikolata',
                   description: 'Açıklama',
-                  price: 3
+                  price: 95
                 }
               ]
             }
@@ -95,7 +95,32 @@ function App() {
     }
   ]
 
-  const [selectedLanguage, setSelectedLanguage] = useState('English')
+  const langs = {
+    translations: {
+      "English": {
+        searchBarPlaceholder: 'Search',
+        backButton: 'Back',
+        detailsAddButton: 'Add',
+        clearBasketButton: 'Clear Basket',
+        detailsProductRemoveButton: 'Remove',
+        checkout: 'Checkout',
+        sidebarContactTitle: 'Contact Us',
+        currency: '$',
+      },
+      "Turkish": {
+        searchBarPlaceholder: 'Ara',
+        backButton: 'Geri',
+        detailsAddButton: 'Ekle',
+        clearBasketButton: 'Sepeti Boşalt',
+        detailsProductRemoveButton: 'Kaldır',
+        checkout: 'Toplam Tutar',
+        sidebarContactTitle: 'Bize Ulaşın',
+        currency: '₺',
+      }
+    }
+  }
+
+  const [selectedLanguage, setSelectedLanguage] = useState("English")
 
   const [productStack, setProductStack] = useState([data.map(item => item.translations[selectedLanguage])])
 
@@ -177,6 +202,8 @@ function App() {
         showDetails(product)
         showSubProducts(product)
       }}
+      selectedLanguage={selectedLanguage}
+      langs={langs}
     />
   })
 
@@ -252,6 +279,8 @@ function App() {
         sidebar={sidebar}
         showSidebar={showSidebar}
         hideSidebar={hideSidebar}
+        selectedLanguage={selectedLanguage}
+        langs={langs}
       />
 
       <div className='bg-white translate-y-[-90px] z-40 mx-[25px] p-[25px]'>
@@ -260,7 +289,7 @@ function App() {
           && 
           <div className='cursor-pointer flex items-center gap-[5px] mb-[10px]' onClick={handleBack}>
             <FaChevronLeft />
-            <p>Back</p>
+            <p>{langs.translations[selectedLanguage].backButton}</p>
           </div>
     
         }
@@ -280,6 +309,8 @@ function App() {
                   showDetails(product)
                   showSubProducts(product)
                 }}
+                selectedLanguage={selectedLanguage}
+                langs={langs}
               />
             })
           }
@@ -297,6 +328,8 @@ function App() {
           increaseCount={() => increaseCount(currentProduct)}
           decreaseCount={() => decreaseCount(currentProduct)}
           setCount={(e) => setCount(currentProduct, JSON.parse(e.target.value))}
+          selectedLanguage={selectedLanguage}
+          langs={langs}
         />
       }
 
@@ -312,6 +345,8 @@ function App() {
           setCurrentProduct={setCurrentProduct}
           setCount={setCount}
           total={total}
+          selectedLanguage={selectedLanguage}
+          langs={langs}
         />
       }
 

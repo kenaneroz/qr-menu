@@ -15,7 +15,7 @@ export default function Header(props) {
                     {
                         props.searchBar &&
                         <textarea 
-                            placeholder="Search"
+                            placeholder={props.langs.translations[props.selectedLanguage].searchBarPlaceholder}
                             value={props.searchTerm}
                             onChange={(e) => props.setSearchTerm(e.target.value)}
                             className="w-[125px] placeholder-[#50110A]/25 resize-none text-sm rounded-full border border-[#50110A] px-[10px] py-[3px]"
@@ -58,7 +58,7 @@ export default function Header(props) {
                                 <p className="text-xl font-bold pt-[5px]">Burgers</p>
                             </div>
                             <div className="flex flex-col gap-[2px] py-[25px]">
-                                <p className="font-bold">Contact Us</p>
+                                <p className="font-bold">{props.langs.translations[props.selectedLanguage].sidebarContactTitle}</p>
                                 <p className="text-sm">Lorem ipsum dolor sit amet</p>
                                 <p className="text-sm">+1 4387985779</p>
                                 <p className="text-sm">contact@burgers.com</p>

@@ -11,6 +11,8 @@ export default function Basket(props) {
             increaseCount={() => props.increaseCount(product)}
             decreaseCount={() => props.decreaseCount(product)}
             setCount={(e) => props.setCount(product, JSON.parse(e.target.value))}
+            selectedLanguage={props.selectedLanguage}
+            langs={props.langs}
         />
     })
 
@@ -24,15 +26,15 @@ export default function Basket(props) {
                 <button 
                     className="cursor-pointer"
                     onClick={() => props.setBasket([])}    
-                >Clear Basket</button>
+                >{props.langs.translations[props.selectedLanguage].clearBasketButton}</button>
             </div>
             <div>{productsInBasket}</div>
             {
                 props.total != 0
                 &&
                 <div className="flex items-end gap-[5px] pt-[25px]">
-                    <p className="text-white">Checkout:</p>
-                    <p className="text-white text-xl font-bold">${props.total}</p>
+                    <p className="text-white">{props.langs.translations[props.selectedLanguage].checkout}:</p>
+                    <p className="text-white text-xl font-bold">{props.langs.translations[props.selectedLanguage].currency}{props.total}</p>
                 </div>
             }
         </div>

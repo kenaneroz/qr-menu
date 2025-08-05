@@ -19,7 +19,7 @@ export default function BasketProduct(props) {
                         onClick={props.increaseCount}
                     >+</button>
                 </div>
-                <button className="cursor-pointer text-white" onClick={() => props.setBasket(products => products.filter(product => product.title !== props.title))}>Remove</button>
+                <button className="cursor-pointer text-white" onClick={() => props.setBasket(products => products.filter(product => product.title !== props.title))}>{props.langs.translations[props.selectedLanguage].detailsProductRemoveButton}</button>
             </div>
         </div>
     )
