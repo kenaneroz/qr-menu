@@ -5,7 +5,6 @@ import Product from './components/Product.jsx'
 import { FaChevronLeft } from "react-icons/fa6"
 import Details from './components/Details.jsx'
 import Basket from './components/Basket.jsx'
-import BasketProduct from './components/BasketProduct.jsx'
 
 
 function App() {
@@ -23,6 +22,7 @@ function App() {
               price: 'none',
               sub: [
                 {
+                  id: 0,
                   imgUrl: '/drinks.jpg',
                   title: 'Iced Filter Coffee',
                   description: 'Description',
@@ -36,12 +36,14 @@ function App() {
               price: 'none',
               sub: [
                 {
+                  id: 1,
                   imgUrl: '/drinks.jpg',
                   title: 'Americano',
                   description: 'Description',
                   price: 3.10
                 },
                 {
+                  id: 2,
                   imgUrl: '/drinks.jpg',
                   title: 'Hot Chocolate',
                   description: 'Description',
@@ -63,6 +65,7 @@ function App() {
               price: 'none',
               sub: [
                 {
+                  id: 0,
                   imgUrl: '/drinks.jpg',
                   title: 'Soğuk Filtre Kahve',
                   description: 'Açıklama',
@@ -76,12 +79,14 @@ function App() {
               price: 'none',
               sub: [
                 {
+                  id: 1,
                   imgUrl: '/drinks.jpg',
                   title: 'Americano',
                   description: 'Açıklama',
                   price: 120
                 },
                 {
+                  id: 2,
                   imgUrl: '/drinks.jpg',
                   title: 'Sıcak Çikolata',
                   description: 'Açıklama',
@@ -264,6 +269,36 @@ function App() {
   function hideSidebar() {
     setSidebar(false)
   }
+
+  useEffect(() => {
+    setBasket(prev =>
+      prev.map(product => searchInBasket(data, selectedLanguage, product))
+    )
+  }, [selectedLanguage])
+
+  function searchInBasket(data, selectedLanguage, product) {
+    const list = data[0].translations[selectedLanguage].sub;
+
+    function recursiveSearch(items) {
+      for (const item of items) {
+        if (item.id === product.id && !item.sub) return {...item, count: product.count};
+        if (item.sub) {
+          const found = recursiveSearch(item.sub);
+          if (found) return found;
+        }
+      }
+      return null;
+    }
+
+    return recursiveSearch(list);
+  }
+
+
+
+
+
+
+
 
   return (
     <div className='max-w-lg relative mx-auto'>
