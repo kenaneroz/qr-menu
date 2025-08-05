@@ -239,7 +239,7 @@ function App() {
   }
 
   return (
-    <div>
+    <div className='max-w-lg mx-auto'>
       <Header 
         setSelectedLanguage={setSelectedLanguage} 
         showBasket={showBasket}  
