@@ -7,6 +7,9 @@ import Details from './components/Details.jsx'
 import Category from './components/Category.jsx'
 import BasketProduct from './components/BasketProduct.jsx'
 import { IoMdClose } from "react-icons/io"
+import { MdOutlineStar } from "react-icons/md"
+import { MdOutlineStarBorder } from "react-icons/md"
+
 
 function App() {
   const data = [
@@ -55,6 +58,10 @@ function App() {
         checkout: 'Checkout',
         sidebarContactTitle: 'Contact Us',
         currency: '$',
+        rateButton: 'Feedback',
+        rate: 'Rate',
+        ratingDislikeWhy: 'We value your feedback to serve you better.',
+        submitRateButton: 'Submit',
       },
       "Turkish": {
         searchBoxPlaceholder: 'Ara',
@@ -67,6 +74,10 @@ function App() {
         checkout: 'Toplam Tutar',
         sidebarContactTitle: 'Bize Ulaşın',
         currency: '₺',
+        rateButton: 'Geri Bildirim',
+        rate: 'Değerlendirme',
+        ratingDislikeWhy: 'Size daha iyi hizmet verebilmek için geri bildirimlerinize değer veriyoruz.',
+        submitRateButton: 'Gönder',
       }
     }
   }
@@ -182,8 +193,11 @@ function App() {
 
   const [sidebarVisibility, setSidebarVisibility] = useState(false)
 
-
-
+  const cats = {
+    "Cold Drinks": ["Iced Filter Coffee"]
+  }
+  const [ratingVisibility, setRatingVisibility] = useState(false)
+  const [rating, setRating] = useState('')
 
   return (
     <div className='max-w-lg relative mx-auto'>
@@ -264,7 +278,7 @@ function App() {
               onClick={() => setBasketVisibility(false)}
             />
             {
-              basket.length > 1 &&
+              basket.length > 0 &&
               <button 
                 className='text-white text-sm'
                 onClick={() => setBasket([])}
@@ -285,6 +299,28 @@ function App() {
               <p className='text-xl font-bold'>{langs.translations[selectedLanguage].currency}{total}</p>
             </div>
           }
+        </div>
+      }
+
+      {/* RATE */}
+      <button 
+        className='bg-[#50110A] text-white fixed bottom-[25px] left-[50px] rounded-[20px] mb-[10px] px-[20px] py-[10px]'
+        onClick={() => setRatingVisibility(true)}
+      >{ langs.translations[selectedLanguage].rateButton }</button>
+      {
+        ratingVisibility &&
+        <div className='bg-[#50110A] min-h-[250px] w-full max-w-lg fixed bottom-0 flex flex-col gap-[15px] mx-auto p-[25px]'>
+          <button 
+            className='text-white text-end mb-[35px]'
+            onClick={() => setRatingVisibility(false)}
+          >Close</button>
+
+          {/* REVIEW */}
+          <textarea id='ratingFormTextarea' rows={3} className='resize-none bg-[#50110A] text-white w-full border outline-none border-white rounded-[15px] px-[15px] py-[10px]' placeholder={langs.translations[selectedLanguage].ratingDislikeWhy}></textarea> 
+
+          {/* SEND */}
+          <button className='bg-white text-[#50110A] w-[50%] rounded-full px-[15px] py-[15px]'>{langs.translations[selectedLanguage].submitRateButton}</button>
+          
         </div>
       }
     </div>
