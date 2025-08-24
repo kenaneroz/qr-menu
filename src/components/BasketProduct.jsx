@@ -1,25 +1,26 @@
 export default function BasketProduct(props) {
     return (
-        <div className="flex items-center mb-[10px]">
-            <img src={props.imgUrl} alt="" className="bg-gray-400 h-[150px] w-[150px] rounded-[25px] mr-[35px]" />
-            <div>
-                <p className="text-white">{props.title}</p>
-                <div className="max-w-max flex items-center border border-white my-[5px]">
+        <div key={props.id} className="bg-white flex items-center rounded-[35px] mb-[10px] p-[10px] pr-[25px]">
+            <img src={props.imgUrl} alt="" className="bg-gray-400 h-[125px] w-[125px] rounded-[25px] mr-[20px]" />
+            <div className="w-full">
+                <div className="w-full flex justify-between">
+                    <p className="text-[#50110A]">{props.title}</p>
                     <button 
-                        className="bg-white text-[#50110A] h-[30px] w-[30px] hover:bg-[#50110A] hover:text-white hover:scale-90 hover:shadow-inner transition duration-300"
+                        className="cursor-pointer text-[#50110A] text-sm"
+                        onClick={props.removeFromBasket}
+                    >{props.langs.translations[props.selectedLanguage].detailsProductRemoveButton}</button>
+                </div>
+                <div className="max-w-max flex items-center my-[7px]">
+                    <button 
+                        className="text-[#50110A] h-[30px] w-[30px] hover:scale-90 transition duration-300 border border-[#50110A]/50 rounded-[10px]"
                         onClick={props.decreaseCount}
                     >-</button>
-                    <textarea 
-                        className="bg-transparent h-[25px] w-[30px] resize-none overflow-hidden text-white text-center" 
-                        value={props.count}
-                        onChange={props.setCount}
-                    ></textarea> 
+                    <p className="bg-transparent text-[#50110A] resize-none overflow-hidden text-center px-[7px]">{props.count}</p> 
                     <button 
-                        className="bg-white text-[#50110A] h-[30px] w-[30px] hover:bg-[#50110A] hover:text-white hover:scale-90 hover:shadow-inner transition duration-300"
+                        className="bg-[#50110A] text-white h-[30px] w-[30px] hover:scale-90 transition duration-300 rounded-[10px]"
                         onClick={props.increaseCount}
                     >+</button>
                 </div>
-                <button className="cursor-pointer text-white" onClick={() => props.setBasket(products => products.filter(product => product.title !== props.title))}>{props.langs.translations[props.selectedLanguage].detailsProductRemoveButton}</button>
             </div>
         </div>
     )

@@ -4,98 +4,40 @@ import Header from './components/Header.jsx'
 import Product from './components/Product.jsx'
 import { FaChevronLeft } from "react-icons/fa6"
 import Details from './components/Details.jsx'
-import Basket from './components/Basket.jsx'
-
+import Category from './components/Category.jsx'
+import BasketProduct from './components/BasketProduct.jsx'
+import { IoMdClose } from "react-icons/io"
 
 function App() {
   const data = [
     {
+      id: '0',
+      bgUrl: 'drinks.jpg',
       translations: {
         "English": {
-          imgUrl: '/drinks.jpg',
-          title: 'Drinks',
-          price: 'none',
-          sub: [
+          title: 'Cold Drinks',
+          content: [
             {
-              imgUrl: '/drinks.jpg',
-              title: 'Cold Drinks',
-              price: 'none',
-              sub: [
-                {
-                  id: 0,
-                  imgUrl: '/drinks.jpg',
-                  title: 'Iced Filter Coffee',
-                  description: 'Description',
-                  price: 3.00
-                }
-              ]
-            },
-            {
-              imgUrl: '/drinks.jpg',
-              title: 'Hot Drinks',
-              price: 'none',
-              sub: [
-                {
-                  id: 1,
-                  imgUrl: '/drinks.jpg',
-                  title: 'Americano',
-                  description: 'Description',
-                  price: 3.10
-                },
-                {
-                  id: 2,
-                  imgUrl: '/drinks.jpg',
-                  title: 'Hot Chocolate',
-                  description: 'Description',
-                  price: 2.95
-                }
-              ]
+              id: '00',
+              bgUrl: 'drinks.jpg',
+              title: 'Iced Filter Coffee',
+              description: 'Description',
+              price: 3
             }
           ]
         },
         "Turkish": {
-          imgUrl: '/drinks.jpg',
-          title: "İçecekler",
-          description: '',
-          price: 'none',
-          sub: [
+          title: 'Soğuk İçecekler',
+          content: [
             {
-              imgUrl: '/drinks.jpg',
-              title: 'Soğuk İçecekler',
-              price: 'none',
-              sub: [
-                {
-                  id: 0,
-                  imgUrl: '/drinks.jpg',
-                  title: 'Soğuk Filtre Kahve',
-                  description: 'Açıklama',
-                  price: 100
-                }
-              ]
-            },
-            {
-              imgUrl: '/drinks.jpg',
-              title: 'Sıcak İçecekler',
-              price: 'none',
-              sub: [
-                {
-                  id: 1,
-                  imgUrl: '/drinks.jpg',
-                  title: 'Americano',
-                  description: 'Açıklama',
-                  price: 120
-                },
-                {
-                  id: 2,
-                  imgUrl: '/drinks.jpg',
-                  title: 'Sıcak Çikolata',
-                  description: 'Açıklama',
-                  price: 95
-                }
-              ]
+              id: '00',
+              bgUrl: 'drinks.jpg',
+              title: 'Soğuk Filtre Kahve',
+              description: 'Açıklama',
+              price: 110
             }
           ]
-        }
+        } 
       }
     }
   ]
@@ -103,20 +45,24 @@ function App() {
   const langs = {
     translations: {
       "English": {
-        searchBarPlaceholder: 'Search',
+        searchBoxPlaceholder: 'Search',
         backButton: 'Back',
-        detailsAddButton: 'Add',
+        detailsAddButton: 'Add to Card',
         clearBasketButton: 'Clear Basket',
-        detailsProductRemoveButton: 'Remove',
+        basketEmpty: 'Your basket is empty!',
+        addSomethingButton: 'Add Something',
+        detailsProductRemoveButton: 'Delete',
         checkout: 'Checkout',
         sidebarContactTitle: 'Contact Us',
         currency: '$',
       },
       "Turkish": {
-        searchBarPlaceholder: 'Ara',
+        searchBoxPlaceholder: 'Ara',
         backButton: 'Geri',
-        detailsAddButton: 'Ekle',
+        detailsAddButton: 'Sepete Ekle',
         clearBasketButton: 'Sepeti Boşalt',
+        basketEmpty: 'Sepetiniz boş!',
+        addSomethingButton: 'Bir şeyler Ekle',
         detailsProductRemoveButton: 'Kaldır',
         checkout: 'Toplam Tutar',
         sidebarContactTitle: 'Bize Ulaşın',
@@ -127,265 +73,220 @@ function App() {
 
   const [selectedLanguage, setSelectedLanguage] = useState("English")
 
-  const [productStack, setProductStack] = useState([data.map(item => item.translations[selectedLanguage])])
+  const [selectedCategory, setSelectedCategory] = useState(null)
 
-  useEffect(() => {
-    setProductStack([data.map(item => item.translations[selectedLanguage])])
-  }, [selectedLanguage])
+  const categories = data.map(category => {
+    return (
+      <Category
+        id={category.id}
+        bgUrl={category.bgUrl}
+        title={category.translations[selectedLanguage].title}
+        setSelectedCategory={() => setSelectedCategory(data.find(cat => cat.id == category.id))}
+      />
+    )
+  })
 
-  function showSubProducts(product) {
-    if(product.sub) {
-      setProductStack(prev => [...prev, product.sub])
-    }
-  }
-  
-  function handleBack() {
-    setProductStack(prev => prev.slice(0, -1))
-  }
+  const [selectedProduct, setSelectedProduct] = useState(null)
 
-  const [detailsActive, setDetailsActive] = useState(false)
+  const categoryProducts = selectedCategory?.translations[selectedLanguage].content.map(product => {
+    return (
+      <Product
+        id={product.id}
+        bgUrl={product.bgUrl}
+        title={product.title}
+        description={product.description}
+        price={product.price}
+        selectedLanguage={selectedLanguage}
+        langs={langs}
+        setSelectedProduct={() => setSelectedProduct({...product, count: 0})}
+        showProductDetails={() => {
+          document.body.style.overflow = 'hidden'
+          setProductDetailsVisibility(true)
+        }}
+      />
+    ) 
+  }) || []
 
-  const [currentProduct, setCurrentProduct] = useState(null)
+  const [productDetailsVisible, setProductDetailsVisibility] = useState(false)
 
-  function showDetails(product) {
-    document.body.style.overflow = 'hidden'
-    if(!product.sub) {
-      setDetailsActive(true)
-      setBasketActive(false)
-      setCurrentProduct(product)
-      setSidebar(false)
-    }
-  }
-
-  const [basketActive, setBasketActive] = useState(false)
   const [basket, setBasket] = useState([])
 
-  const [total, setTotal] = useState(0)
+  function increaseCount(p) {
+    setBasket(prev => prev.map(product => product.id == p.id ? {...product, count: product.count + 1} : product))
+  }
+
+  function decreaseCount(p) {
+    setBasket(prev => 
+      prev
+        .map(product => (product.id === p.id && product.count > 0) ? {...product, count: product.count - 1} : product)
+        .filter(product => product.count > 0)
+    )
+  }
 
   const [basketItemsCount, setBasketItemsCount] = useState(0)
+  const [total, setTotal] = useState(0)
   useEffect(() => {
     let count = 0
     let total = 0
     basket.map(product => {
       count += product.count
-      if(product.price != 'none') total += product.count * product.price
+      total += product.count * product.price
     })
-    setBasketItemsCount(() => count ? count : 0)
+    setBasketItemsCount(count)
     setTotal(total)
   }, [basket])
- 
-  function addToBasket() {
-    setBasket(prev =>  [...prev, {...currentProduct, count: 1}])
-  }
 
-  function increaseCount(selectedProduct) {
-    setBasket(prev => prev.map(product => product.title == selectedProduct.title ? {...product, count: product.count + 1} : product))
-  }
-  function decreaseCount(selectedProduct) {
-    setBasket(prev => prev.map(product =>(product.title == selectedProduct.title && product.count > 0) ? {...product, count: product.count - 1} : product))
-    setBasket(prev => prev.filter(product => product.count != 0))
-  }
-
-
-  function showBasket() {
-    setBasketActive(true)
-    setDetailsActive(false)
-    document.body.style.overflow = 'hidden'
-    setSidebar(false)
-  }
-  function hideBasket() {
-    setBasketActive(false)
-  }
-
-  const productsShown = productStack[productStack.length - 1].map((product, index) => {
-    return <Product 
-      key={index}
-      imgUrl={product.imgUrl} 
+  const [basketVisibility, setBasketVisibility] = useState(false)
+  const basketProducts = basket.map(product => {
+    return <BasketProduct 
+      id={product.id}
+      imgUrl={product.bgUrl}
       title={product.title}
-      price={product.price}
-      onClick={() => {
-        showDetails(product)
-        showSubProducts(product)
-      }}
+      count={product.count}
+      increaseCount={() => increaseCount(product)}
+      decreaseCount={() => decreaseCount(product)}
+      removeFromBasket={() => setBasket(prev => prev.filter(p => p.id != product.id))}
       selectedLanguage={selectedLanguage}
       langs={langs}
     />
   })
 
-  function setCount(p, c) {
-    setBasket(prev => prev.map(product => product.title == p.title ? {...product, count: c} : product))
-  }
-
+  const [searchBoxVisibility, setSearchBoxVisibility] = useState(false)
   const [searchTerm, setSearchTerm] = useState('')
-  const [searchItems, setSearchItems] = useState([])
+
+  const [matchedProducts, setMatchedProducts] = useState([])
   useEffect(() => {
-    if(searchTerm === '') {
-      setSearchItems([])
-    }
-    searchMenu(data, selectedLanguage, searchTerm)
+    setMatchedProducts(data.flatMap(category => category.translations[selectedLanguage].content.filter(product => product.title.toLowerCase().includes(searchTerm.toLowerCase()))))
   }, [searchTerm])
-  function searchMenu(data, selectedLanguage, searchTerm) {
-    const results = []
 
-    function traverse(items) {
-      for (const item of items) {
-
-        if(item.title.toLowerCase().includes(searchTerm.toLowerCase()) && !item.sub) {
-          results.push(item)
-        }
-
-        if(item.sub && Array.isArray(item.sub)) {
-          traverse(item.sub)
-        }
-      }
-    }
-
-    for(const category of data) {
-      const langData = category.translations[selectedLanguage]
-      if(langData) {
-        traverse([langData])
-      }
-    }
-
-    setSearchItems(results)
-  }
-
-  const [searchBar, setSearchBar] = useState(false)
-  function showSearchBar() {
-    setSearchBar(true)
-  }
-  function hideSearchBar() {
-    setSearchBar(false)
-    setSearchTerm('')
-  }
-
-  const [sidebar, setSidebar] = useState(false)
-  function showSidebar() {
-    setSidebar(true)
-    setBasketActive(false)
-    setDetailsActive(false)
-    if(sidebar) document.body.style.overflow = 'hidden'
-  }
-  function hideSidebar() {
-    setSidebar(false)
-  }
+  const matchedProductElements = matchedProducts.map(product => {
+    return  <Product
+      id={product.id}
+      bgUrl={product.bgUrl}
+      title={product.title}
+      description={product.description}
+      price={product.price}
+      selectedLanguage={selectedLanguage}
+      langs={langs}
+      setSelectedProduct={() => setSelectedProduct({...product, count: 0})}
+      showProductDetails={() => {
+        document.body.style.overflow = 'hidden'
+        setProductDetailsVisibility(true)
+      }}
+    />
+  })
 
   useEffect(() => {
-    setBasket(prev =>
-      prev.map(product => searchInBasket(data, selectedLanguage, product))
-    )
+    setBasket([])
   }, [selectedLanguage])
 
-  function searchInBasket(data, selectedLanguage, product) {
-    const list = data[0].translations[selectedLanguage].sub;
-
-    function recursiveSearch(items) {
-      for (const item of items) {
-        if (item.id === product.id && !item.sub) return {...item, count: product.count};
-        if (item.sub) {
-          const found = recursiveSearch(item.sub);
-          if (found) return found;
-        }
-      }
-      return null;
-    }
-
-    return recursiveSearch(list);
-  }
-
-
-
-
+  const [sidebarVisibility, setSidebarVisibility] = useState(false)
 
 
 
 
   return (
     <div className='max-w-lg relative mx-auto'>
-      <Header 
-        setSelectedLanguage={setSelectedLanguage} 
-        showBasket={showBasket}  
+      {/* HEADER */}
+      <Header
+        showBasket={() => setBasketVisibility(true)}
         basketItemsCount={basketItemsCount}
+        searchBoxVisibility={searchBoxVisibility}
+        showHideSearchBox={() => {
+          setSearchBoxVisibility(prev => !prev)
+          setSearchTerm('')
+        }}
         searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        searchBar={searchBar}
-        showSearchBar={showSearchBar}
-        hideSearchBar={hideSearchBar}
-        sidebar={sidebar}
-        showSidebar={showSidebar}
-        hideSidebar={hideSidebar}
+        setSearchTerm={(e) => setSearchTerm(e.target.value)}
         selectedLanguage={selectedLanguage}
         langs={langs}
+        setSelectedLanguage={(e) => setSelectedLanguage(e.target.value)}
+        sidebarVisibility={sidebarVisibility}
+        setSidebarVisibility={setSidebarVisibility}
       />
 
       <div className='bg-white translate-y-[-90px] z-40 mx-[25px] p-[25px]'>
+        {/* BACK BUTTON */}
         {
-          productStack.length > 1 && searchTerm === ''
+          selectedCategory != null
           && 
-          <div className='cursor-pointer flex items-center gap-[5px] mb-[10px]' onClick={handleBack}>
-            <FaChevronLeft />
+          <div 
+            className='cursor-pointer flex items-center gap-[5px] mb-[15px]'
+            onClick={() => setSelectedCategory(null)}
+          >
+            <FaChevronLeft className='text-xs' />
             <p>{langs.translations[selectedLanguage].backButton}</p>
           </div>
     
         }
+
+        {/* CATEGORIES/PRODUCTS/MATCHED PRODUCTS */}
         <div className="w-full max-w-full min-h-screen grid grid-cols-2 gap-[5px]">
           {
-            searchTerm === ''
+            searchTerm == ''
             ?
-            productsShown
-            :
-            searchItems.map((product, index) => {
-              return <Product 
-                key={index}
-                imgUrl={product.imgUrl} 
-                title={product.title}
-                price={product.price}
-                onClick={() => {
-                  showDetails(product)
-                  showSubProducts(product)
-                }}
-                selectedLanguage={selectedLanguage}
-                langs={langs}
-              />
-            })
+            (
+              selectedCategory == null
+              ?
+              categories
+              :
+              categoryProducts
+            )
+            : 
+            matchedProductElements
           }
         </div>
       </div>
-      
+
+      {/* PRODUCT DETAILS */}
       {
-        detailsActive &&
+        productDetailsVisible &&
         <Details 
-          detailsActive={detailsActive}
-          currentProduct={currentProduct}
-          setDetailsActive={setDetailsActive}
-          basket={basket}
-          addToBasket={addToBasket}
-          increaseCount={() => increaseCount(currentProduct)}
-          decreaseCount={() => decreaseCount(currentProduct)}
-          setCount={(e) => setCount(currentProduct, JSON.parse(e.target.value))}
-          selectedLanguage={selectedLanguage}
-          langs={langs}
+        selectedProduct={selectedProduct}
+        setSelectedProduct={setSelectedProduct}
+        selectedLanguage={selectedLanguage}
+        langs={langs}
+        basket={basket}
+        addToBasket={() => setBasket(prev => [...prev, {...selectedProduct, count: 1}])}
+        increaseCount={() => increaseCount(selectedProduct)}
+        decreaseCount={() => decreaseCount(selectedProduct)}
+        hideProductDetails={() => setProductDetailsVisibility(false)}
         />
       }
 
+      {/* BASKET */}
       {
-        basketActive &&
-        <Basket
-          basketActive={basketActive}
-          hideBasket={hideBasket}
-          basket={basket}
-          setBasket={setBasket}
-          increaseCount={increaseCount}
-          decreaseCount={decreaseCount}
-          setCurrentProduct={setCurrentProduct}
-          setCount={setCount}
-          total={total}
-          selectedLanguage={selectedLanguage}
-          langs={langs}
-        />
+        basketVisibility &&
+        <div className='bg-[#50110A] h-dvh w-full absolute top-0 left-0 p-[25px]'>
+          <div className='flex justify-between mb-[50px]'>
+            <IoMdClose 
+              className="cursor-pointer text-white text-xl"
+              onClick={() => setBasketVisibility(false)}
+            />
+            {
+              basket.length > 1 &&
+              <button 
+                className='text-white text-sm'
+                onClick={() => setBasket([])}
+              >{langs.translations[selectedLanguage].clearBasketButton}</button>
+            }
+          </div>
+          {
+            basketItemsCount > 0 
+            ?
+            basketProducts
+            :
+            <p className='text-white'>{langs.translations[selectedLanguage].basketEmpty}</p>
+          }
+          {
+            total > 0 &&
+            <div className='bg-white text-[#50110A] w-[50%] flex justify-center items-end gap-[7px] rounded-[25px] px-[25px] py-[15px]'>
+              <p>{langs.translations[selectedLanguage].checkout}:</p>
+              <p className='text-xl font-bold'>{langs.translations[selectedLanguage].currency}{total}</p>
+            </div>
+          }
+        </div>
       }
-
-
     </div>
   )
 }

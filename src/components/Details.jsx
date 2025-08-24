@@ -1,52 +1,46 @@
-import { IoMdClose } from "react-icons/io";
+import { IoMdClose } from "react-icons/io"
 
 export default function Details(props) {
-    let foundProduct
-    if(props.basket.length > 0) {
-        foundProduct = props.basket.find(product => product.title == props.currentProduct.title)
-    }
+    const foundedProduct = props.basket.find(product => product.id == props.selectedProduct.id)
 
     return (
         <div className={`bg-[#50110A] h-dvh w-full max-w-lg z-999 absolute top-0 left-0 text-center p-[25px]`}>
             <IoMdClose 
                 className="cursor-pointer text-white text-2xl"
-                onClick={() => props.setDetailsActive(false)}
+                onClick={props.hideProductDetails}
             />
             <div>
-                <div 
-                    style={{backgroundImage: props.currentProduct?.imgUrl ? `url(${props.currentProduct.imgUrl})` : ''}}
-                    className="bg-no-repeat bg-center bg-cover w-full aspect-square relative rounded-[25px] mt-[50px] mb-[25px]"
-                >   
+                <img
+                    src={props.selectedProduct.bgUrl} alt=""
+                    className="w-full aspect-square rounded-[75px] mt-[50px]"
+                />
+                <div className="flex justify-center my-[15px]">
                     {
-                        (foundProduct && foundProduct.count > 0)
+                        foundedProduct && foundedProduct.count > 0
                         ?
-                        <div className="absolute bottom-[25px] right-[25px] flex items-center border border-white">
+                        <div className="max-w-max flex items-center my-[5px]">
                             <button 
-                                className="bg-white text-[#50110A] h-[30px] w-[30px] hover:bg-[#50110A] hover:text-white hover:scale-90 hover:shadow-inner transition duration-300"
+                                className="text-white h-[30px] w-[30px] hover:scale-90 transition duration-300 border border-white/50 rounded-[10px]"
                                 onClick={props.decreaseCount}
                             >-</button>
-                            <textarea 
-                                className="bg-transparent h-[25px] w-[30px] resize-none overflow-hidden text-white text-center" 
-                                value={foundProduct.count}
-                                onChange={props.setCount}
-                            ></textarea> 
+                            <p className="bg-transparent text-white resize-none overflow-hidden text-center px-[7px]">{foundedProduct.count}</p> 
                             <button 
-                                className="bg-white text-[#50110A] h-[30px] w-[30px] hover:bg-[#50110A] hover:text-white hover:scale-90 hover:shadow-inner transition duration-300"
+                                className="bg-white text-[#50110A] h-[30px] w-[30px] hover:scale-90 transition duration-300 rounded-[10px]"
                                 onClick={props.increaseCount}
                             >+</button>
                         </div>
                         :
-                        <button
-                            className="cursor-pointer bg-white text-[#50110A] h-[40px] w-[50px] absolute bottom-[25px] right-[25px] hover:bg-[#50110A] hover:text-white hover:scale-90 hover:shadow-inner transition duration-300 rounded-full"
+                        <button 
+                            className="bg-white text-[#50110A] w-[50%] absolute bottom-[50px] rounded-full py-[15px]"
                             onClick={props.addToBasket}
                         >{props.langs.translations[props.selectedLanguage].detailsAddButton}</button>
                     }
                 </div>
                 <div className="flex justify-center items-center gap-[10px]">
-                    <h3 className="text-white">{props.currentProduct && props.currentProduct.title}</h3>
-                    <p className="bg-white text-[#50110A] w-[30px] h-[30px] flex justify-center items-center rounded-full">{props.langs.translations[props.selectedLanguage].currency}{props.currentProduct && props.currentProduct.price}</p>
+                    <h3 className="text-white">{props.selectedProduct && props.selectedProduct.title}</h3>
+                    <p className="bg-white text-[#50110A] text-lg font-[500] flex justify-center items-center rounded-full">{props.langs.translations[props.selectedLanguage].currency}{props.selectedProduct && props.selectedProduct.price}</p>
                 </div>
-                <p className="text-white">{props.currentProduct && props.currentProduct.description}</p>
+                <p className="text-white">{props.selectedProduct && props.selectedProduct.description}</p>
             </div>
         </div>
     )

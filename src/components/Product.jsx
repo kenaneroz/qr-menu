@@ -1,15 +1,19 @@
 export default function Product(props) {
     return (
         <div 
-            style={{ backgroundImage: `url(${props.imgUrl})` }}
-            className="aspect-square bg-no-repeat bg-center bg-cover cursor-pointer relative rounded-[25px]"
-            onClick={props.onClick}
+            key={props.id}
+            className="bg-[#50110A]/5 h-max flex flex-col items-center text-center rounded-[35px] p-[15px]"
+            onClick={() => {
+                props.setSelectedProduct()
+                props.showProductDetails()
+            }}
         >
-            <div className="absolute inset-0 bg-[#50110A]/75 z-10 rounded-[25px]"></div>
-            <div className="absolute inset-0 z-20 flex flex-col justify-center items-center text-center gap-[5px] p-[10px]">
-                <p className="text-white">{props.title}</p>
-                <p className={`${props.price == 'none' ? 'hidden' : ''} bg-white text-[#50110A] min-h-[30px] min-w-[30px] flex justify-center items-center rounded-full`}>{props.langs.translations[props.selectedLanguage].currency}{props.price}</p>
-            </div>
+            <img 
+                src={props.bgUrl} alt=""
+                className="aspect-square bg-no-repeat bg-center bg-cover cursor-pointer relative rounded-[25px]"
+            />
+            <p className="text-[#50110A] mt-[5px] mb-[10px]">{props.title}</p>
+            <p className={`${props.price == 'none' ? 'hidden' : ''} bg-[#50110A]/10 text-[#50110A] min-h-[30px] w-[50%] font-[500] text-lg flex justify-center items-center rounded-[15px]`}>{props.langs.translations[props.selectedLanguage].currency}{props.price}</p>
         </div>
     );
 }
